@@ -1,42 +1,49 @@
 #include <iostream>
+#include <cinttypes>
+#include <vector>
 
 class bigint
 {
 private:
-    unsigned int *data;
-    size_t size;
-    void grow();
-    void shrink();
+    std::vector<uint16_t> data;
 public:
     bigint();
-    bigint(unsigned int);
+    bigint(uint16_t);
     ~bigint();
+
+    bigint operator=(const uint16_t &d);
+    bigint operator=(const bigint &other);
+    friend std::ostream &operator<<(std::ostream &out, bigint b);
 };
 
 bigint::bigint()
 {
-    size = 1;
-    data = new unsigned int[1];
-    *data = 0;
+    data.push_back(0);
 }
 
-bigint::bigint(unsigned int initial)
+bigint::bigint(uint16_t initial)
 {
-    size = 1;
-    data = new unsigned int[1];
-    *data = 0;
+    data.push_back(initial);
 }
 
 bigint::~bigint()
 {
-    delete data;
 }
 
-void bigint::grow()
+bigint bigint::operator=(const uint16_t &d)
 {
-    size += 1;
-    unsigned int *newdata = new unsigned int[size];
-    *newdata = *data;
-    delete data;
-    data = newdata;
+    data.assign(1, d);
+}
+
+std::ostream &operator<<(std::ostream &out, bigint b)
+{
+    
+    return out;
+}
+
+int main()
+{
+    bigint big;
+    std::cout << big << std::endl;
+    return 0;
 }
